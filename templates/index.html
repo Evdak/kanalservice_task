@@ -1,0 +1,257 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<div class="header">
+    <div class="header-section">
+        <h1>Каналсервис</h1>
+    </div>
+</div>
+<div class="section-wrap">
+    <div class="section">
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+        <div>
+            <div class="total">
+                <h1>TOTAL</h1>
+                <h2></h2>
+            </div>
+            <table>
+                <tr>
+                    <th>№</th>
+                    <th>Заказ №</th>
+                    <th>Стоимость,$</th>
+                    <th>Срок поставки</th>
+                    <th>Стоимость,руб</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+<!-- <div>
+    {% for el in data %}
+    <p>{{el}}</p>
+    {%endfor%}
+</div> -->
+
+
+<style>
+    .webmadewell {
+        background-color: white;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .header {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: MidnightBlue;
+        opacity: 0.3;
+    }
+
+    .header-section {
+        position: relative;
+        padding: 5% 0 10%;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        color: white;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        font-family: "Montserrat", sans-serif;
+    }
+
+    h1 {
+        font-weight: 500;
+    }
+
+    h2 {
+        font-weight: 400;
+    }
+
+    .section-wrap {
+        position: relative;
+        background-color: white;
+    }
+
+    .section {
+        position: relative;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 40px;
+    }
+</style>
+
+<script>
+    function parallax_height() {
+        var scroll_top = $(this).scrollTop();
+        var sample_section_top = $(".section").offset().top;
+        var header_height = $(".header-section").outerHeight();
+        $(".section").css({ "margin-top": header_height });
+        $(".header").css({ height: header_height - scroll_top });
+    }
+    parallax_height();
+    $(window).scroll(function () {
+        parallax_height();
+    });
+    $(window).resize(function () {
+        parallax_height();
+    });
+</script>
+
+<script>
+    $.getJSON("/data", function (response) {
+        $('.total h2').text(response.total);
+        $table = $('.section table');
+        response.all_table.forEach(el => {
+            $tr = $("<tr></tr>");
+            el.forEach(th => {
+                $tr.append(`<th>${th}</th>`);
+            })
+            $table.append($tr);
+        }
+        )
+
+        const data = {
+            labels: response.dates,
+            datasets: [
+                {
+                    label: 'Стоимость в руб.',
+                    data: response.values,
+                    borderColor: "#ff726f",
+                    backgroundColor: "#ffcccb",
+                    pointStyle: 'circle',
+                    pointRadius: 10,
+                    pointHoverRadius: 15
+                }
+            ]
+        };
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+                    }
+                }
+            }
+        };
+
+        const actions = [
+            {
+                name: 'pointStyle: circle (default)',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'cirlce';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: cross',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'cross';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: crossRot',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'crossRot';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: dash',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'dash';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: line',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'line';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: rect',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'rect';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: rectRounded',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'rectRounded';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: rectRot',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'rectRot';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: star',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'star';
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'pointStyle: triangle',
+                handler: (chart) => {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.pointStyle = 'triangle';
+                    });
+                    chart.update();
+                }
+            }
+        ];
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    });
+
+</script>
