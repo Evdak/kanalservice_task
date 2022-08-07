@@ -2,6 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from order.services.google_api import get_creds
 
 
 def main():
@@ -16,6 +17,9 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    if 'runserver' in sys.argv:
+        get_creds()
+
     execute_from_command_line(sys.argv)
 
 

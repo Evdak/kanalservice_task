@@ -6,6 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+DOLLAR_EXCHANGE_RATE_URL = "https://www.cbr.ru/scripts/XML_daily.asp?date_req="
+
 
 DEBUG = True
 
@@ -13,12 +15,16 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
+    'order',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -36,7 +42,9 @@ ROOT_URLCONF = 'kanalservice_task.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

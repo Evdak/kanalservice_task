@@ -9,6 +9,11 @@ psycopg2-binary = "*"
 google-api-python-client = "*"
 oauth2client = "*"
 google-auth-oauthlib = "*"
+pytz = "*"
+bs4 = "*"
+requests = "*"
+lxml = "*"
+django-cleanup = "*"
 
 [dev-packages]
 autopep8 = "*"
