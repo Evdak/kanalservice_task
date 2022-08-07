@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 django = "*"
 psycopg2-binary = "*"
+google-api-python-client = "*"
+oauth2client = "*"
+google-auth-oauthlib = "*"
 
 [dev-packages]
 autopep8 = "*"
