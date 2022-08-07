@@ -15,6 +15,32 @@ import difflib
 utc = pytz.UTC
 
 
+def get_data() -> dict:
+    orders = Order.objects.all().order_by('pk')
+    values = {}
+    all_table = []
+    for el in orders:
+        date = str(el.date)
+        if values.get(date):
+            values[date] += el.price_rub
+        else:
+            values[date] = el.price_rub
+        all_table.append([
+            el.pk,
+            el.number,
+            el.price_dollars,
+            date,
+            el.price_rub,
+        ])
+
+    return {
+        'dates': list(values.keys()),
+        'values': values,
+        'all_table': all_table,
+        'total': sum(values.values())
+    }
+
+
 def refresh_file() -> None:
     file, _ = GoogleSheetsFile.objects.get_or_create(
         pk=1,
@@ -90,8 +116,6 @@ def _list_to_normal(ls: list):
 
 
 def _check_if_file_edited(file: GoogleSheetsFile) -> bool:
-    print(file.edit_date)
-    print(utc.localize(get_last_edit_date()))
     return not file.edit_date or file.edit_date <= utc.localize(get_last_edit_date())
 
 
