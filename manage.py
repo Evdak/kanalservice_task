@@ -3,6 +3,7 @@
 import os
 import sys
 from order.services.google_api import get_creds
+from dotenv import load_dotenv
 
 
 def main():
@@ -18,6 +19,7 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     if 'runserver' in sys.argv:
+        load_dotenv()
         get_creds()
 
     execute_from_command_line(sys.argv)
