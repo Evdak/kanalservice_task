@@ -6,6 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+# ссылка для получения текущего курса валют
 DOLLAR_EXCHANGE_RATE_URL = "https://www.cbr.ru/scripts/XML_daily.asp?date_req="
 
 
@@ -60,14 +61,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'kanalservice_task.wsgi.application'
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': os.environ.get('POSTGRES_NAME'),
-    #     'USER': os.environ.get('POSTGRES_USER'),
-    #     'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-    #     'HOST': 'db',
-    #     'PORT': 5432,
-    # },
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
         "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),

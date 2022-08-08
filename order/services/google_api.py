@@ -26,6 +26,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly',
 
 
 def get_file_data() -> dict:
+    """Получение данных из Google Sheets файла"""
     creds = get_creds()
 
     try:
@@ -45,7 +46,7 @@ def get_file_data() -> dict:
 
 
 def get_last_edit_date() -> datetime:
-
+    """Получение даты и времени последнего изменения Google Sheets файла"""
     creds = get_creds()
 
     try:
@@ -64,6 +65,7 @@ def get_last_edit_date() -> datetime:
 
 
 def get_creds() -> dict:
+    """Получение токенов авторизации в Google Api"""
     creds = None
 
     if os.path.exists(
@@ -79,6 +81,7 @@ def get_creds() -> dict:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
+            # Пришлось добавить его сюда, так как не знал как передать этот файл, не закинув его в репозиторий
             flow = InstalledAppFlow.from_client_secrets_file(
                 os.path.join(BASE_DIR, 'order', 'services',
                              'credentials.json'), SCOPES
